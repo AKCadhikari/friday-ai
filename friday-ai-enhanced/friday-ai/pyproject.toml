@@ -1,0 +1,24 @@
+[project]
+name = "friday-ai"
+version = "2.0.0"
+description = "F.R.I.D.A.Y. - Tony Stark AI Voice Assistant (Enhanced Edition)"
+requires-python = ">=3.11"
+dependencies = [
+    "fastmcp>=2.0.0",
+    "httpx",
+    "livekit-agents[deepgram,groq,openai,sarvam,silero]>=1.5.1",
+    "livekit-plugins-google>=1.5.1",
+    "python-dotenv",
+    "psutil",
+    "pyjokes",
+    "pytz",
+    "wikipedia-api",
+]
+
+[project.scripts]
+friday = "server:main"
+friday_voice = "agent_friday:dev"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
