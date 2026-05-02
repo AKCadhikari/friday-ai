@@ -8,7 +8,7 @@ import os
 from dotenv import load_dotenv
 from livekit.agents import AgentSession, Agent, RoomInputOptions
 from livekit.agents import cli, WorkerOptions
-from livekit.agents import MCPServerHTTP
+from livekit.agents.llm.mcp import MCPServerHTTP
 
 load_dotenv()
 
