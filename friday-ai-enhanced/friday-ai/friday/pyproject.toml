@@ -16,7 +16,7 @@ dependencies = [
 ]
 
 [project.scripts]
-friday = "server:main"
+friday = "friday.server:main"
 friday_voice = "agent_friday:dev"
 
 [build-system]
