@@ -1,8 +1,8 @@
 """
-server.py – F.R.I.D.A.Y. MCP Tool Server (Enhanced Edition)
+server.py - F.R.I.D.A.Y. MCP Tool Server (Enhanced Edition)
 Run with: uv run friday
 """
-from fastmcp import FastMCP
+from mcp.server.fastmcp import FastMCP
 from friday.config import MCP_HOST, MCP_PORT, BOSS_NAME
 
 # ── Tool imports ────────────────────────────────────────────────────────────
@@ -26,7 +26,7 @@ mcp = FastMCP(
     name="friday-mcp",
     instructions=(
         f"You are F.R.I.D.A.Y., Tony Stark's AI assistant. "
-        f"You call your user '{BOSS}'. "
+        f"You call your user '{BOSS_NAME}'. "
         "Be concise, confident, and occasionally witty. "
         "You have access to web search, news, system info, weather, "
         "Wikipedia, math, unit conversion, reminders, and suit diagnostics."
