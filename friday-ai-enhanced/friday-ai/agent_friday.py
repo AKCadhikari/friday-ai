@@ -94,7 +94,7 @@ You have access to these tools via MCP. Use them proactively:
 
 
 # ── Agent Definition ─────────────────────────────────────────────────────────
-async def create_agent_session() -> AgentSession:
+async def create_agent_session() -> tuple[AgentSession, Agent]:
     mcp_server = MCPServerHTTP(url=MCP_SSE_URL)
 
     session = AgentSession(
