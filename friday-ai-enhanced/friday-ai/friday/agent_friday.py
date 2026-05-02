@@ -3,13 +3,8 @@ agent_friday.py - F.R.I.D.A.Y. LiveKit Voice Agent (Enhanced Edition)
 Run with: uv run friday_voice
 """
 import logging
-import os
 
 from dotenv import load_dotenv
-from livekit.agents import AgentSession, Agent, RoomInputOptions
-from livekit.agents import cli, WorkerOptions
-from livekit.agents.llm.mcp import MCPServerHTTP
-
 load_dotenv()
 
 from friday.config import (
@@ -18,45 +13,38 @@ from friday.config import (
     OPENAI_API_KEY, GOOGLE_API_KEY, SARVAM_API_KEY,
 )
 
+# ── Import ALL plugins at the top (must be on main thread) ───────────────────
+from livekit.agents import AgentSession, Agent, RoomInputOptions, cli, WorkerOptions
+from livekit.agents.llm.mcp import MCPServerHTTP
+from livekit.plugins.openai import STT as OpenAISTT, TTS as OpenAITTS, LLM as OpenAILLM
+from livekit.plugins.google import LLM as GoogleLLM
+from livekit.plugins.sarvam import STT as SarvamSTT, TTS as SarvamTTS
+from livekit.plugins.deepgram import STT as DeepgramSTT
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# ── Build STT ────────────────────────────────────────────────────────────────
 def _build_stt():
     if STT_PROVIDER == "sarvam":
-        from livekit.plugins.sarvam import STT
-        return STT(api_key=SARVAM_API_KEY)
+        return SarvamSTT(api_key=SARVAM_API_KEY)
     elif STT_PROVIDER == "deepgram":
-        from livekit.plugins.deepgram import STT
-        return STT()
+        return DeepgramSTT()
     else:
-        from livekit.plugins.openai import STT
-        return STT(api_key=OPENAI_API_KEY)
+        return OpenAISTT(api_key=OPENAI_API_KEY)
 
 
-# ── Build LLM ────────────────────────────────────────────────────────────────
 def _build_llm():
     if LLM_PROVIDER == "gemini":
-        from livekit.plugins.google import LLM
-        return LLM(model="gemini-2.5-flash", api_key=GOOGLE_API_KEY)
+        return GoogleLLM(model="gemini-2.5-flash", api_key=GOOGLE_API_KEY)
     else:
-        from livekit.plugins.openai import LLM
-        return LLM(model="gpt-4o", api_key=OPENAI_API_KEY)
+        return OpenAILLM(model="gpt-4o", api_key=OPENAI_API_KEY)
 
 
-# ── Build TTS ────────────────────────────────────────────────────────────────
 def _build_tts():
-    if TTS_PROVIDER == "openai":
-        from livekit.plugins.openai import TTS
-        # "nova" voice is closest to Friday's tone — calm, confident, female AI
-        return TTS(voice="nova", api_key=OPENAI_API_KEY)
-    elif TTS_PROVIDER == "sarvam":
-        from livekit.plugins.sarvam import TTS
-        return TTS(api_key=SARVAM_API_KEY)
+    if TTS_PROVIDER == "sarvam":
+        return SarvamTTS(api_key=SARVAM_API_KEY)
     else:
-        from livekit.plugins.openai import TTS
-        return TTS(voice="nova", api_key=OPENAI_API_KEY)
-
+        return OpenAITTS(voice="nova", api_key=OPENAI_API_KEY)
 
 # ── System Prompt ────────────────────────────────────────────────────────────
 SYSTEM_PROMPT = f"""
