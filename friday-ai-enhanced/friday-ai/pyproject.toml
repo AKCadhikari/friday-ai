@@ -12,7 +12,6 @@ dependencies = [
     "psutil",
     "pyjokes",
     "pytz",
-    "wikipedia-api",
 ]
 
 [project.scripts]
@@ -25,4 +24,3 @@ packages = ["friday"]
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
-
