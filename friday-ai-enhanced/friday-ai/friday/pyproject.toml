@@ -17,7 +17,7 @@ dependencies = [
 
 [project.scripts]
 friday = "friday.server:main"
-friday_voice = "agent_friday:dev"
+friday_voice = "friday.agent_friday:dev"
 
 [build-system]
 requires = ["hatchling"]
