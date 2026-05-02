@@ -1,5 +1,5 @@
 """
-agent_friday.py – F.R.I.D.A.Y. LiveKit Voice Agent (Enhanced Edition)
+agent_friday.py - F.R.I.D.A.Y. LiveKit Voice Agent (Enhanced Edition)
 Run with: uv run friday_voice
 """
 import logging
@@ -8,7 +8,7 @@ import os
 from dotenv import load_dotenv
 from livekit.agents import AgentSession, Agent, RoomInputOptions
 from livekit.agents import cli, WorkerOptions
-from livekit.agents.mcp import MCPServerHTTP
+from livekit.agents import MCPServerHTTP
 
 load_dotenv()
 
